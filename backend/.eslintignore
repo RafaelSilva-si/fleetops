@@ -1,0 +1,4 @@
+node_modules/
+dist/
+src/ignoredFile.js
+**/*.test.js
