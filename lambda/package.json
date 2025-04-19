@@ -1,0 +1,21 @@
+{
+  "name": "lambda-consumer",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "esbuild handler.ts --bundle --platform=node --target=node18 --outfile=dist/index.js",
+    "zip": "zip -j dist/index.zip dist/index.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.788.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.0",
+    "typescript": "^5.3.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

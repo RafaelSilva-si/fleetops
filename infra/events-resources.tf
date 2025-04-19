@@ -4,24 +4,17 @@ provider "aws" {
 
 # Define o caminho para o diretório do código da Lambda
 variable "lambda_source_path" {
-  default = "./lambdas" # Caminho para o diretório do código da Lambda
+  default = "../lambda" # Caminho para o diretório do código da Lambda
 }
 
-# Usando o recurso archive_file para empacotar a Lambda
+# Usando o recurso archive_file para empacotar o código da Lambda
 resource "archive_file" "lambda_zip" {
   type        = "zip"
   source_dir  = var.lambda_source_path
   output_path = "${path.module}/lambda.zip"
 }
 
-# Upload do código da Lambda para o S3
-resource "aws_s3_bucket_object" "lambda_zip" {
-  bucket = "my-lambda-code-bucket" 
-  key    = "lambda.zip"
-  source = archive_file.lambda_zip.output_path
-}
-
-# Função Lambda
+# Função Lambda diretamente com o código compactado
 resource "aws_lambda_function" "event_consumer_lambda" {
   function_name = "event-consumer"
   role          = aws_iam_role.lambda_execution_role.arn
@@ -29,9 +22,8 @@ resource "aws_lambda_function" "event_consumer_lambda" {
   runtime       = "nodejs18.x"
   timeout       = 10
 
-  # Referenciando o código da Lambda do S3
-  s3_bucket = aws_s3_bucket_object.lambda_zip.bucket
-  s3_key    = aws_s3_bucket_object.lambda_zip.key
+  # Referenciando o arquivo ZIP diretamente
+  filename = archive_file.lambda_zip.output_path
 }
 
 # Definindo a IAM Role para Lambda
@@ -50,6 +42,23 @@ resource "aws_iam_role" "lambda_execution_role" {
       }
     ]
   })
+}
+
+resource "aws_dynamodb_table" "events_table" {
+  name           = "EventsTable"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "vehicleId"
+  range_key      = "timestamp"
+
+  attribute {
+    name = "vehicleId"
+    type = "S"
+  }
+
+  attribute {
+    name = "timestamp"
+    type = "S"
+  }
 }
 
 resource "aws_iam_role_policy" "lambda_policy" {
@@ -76,6 +85,15 @@ resource "aws_iam_role_policy" "lambda_policy" {
           "sqs:GetQueueAttributes"
         ]
         Resource = "*" # você pode especificar a ARN da fila aqui se quiser restringir
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:GetItem"
+        ]
+        Resource = aws_dynamodb_table.events_table.arn
       }
     ]
   })
