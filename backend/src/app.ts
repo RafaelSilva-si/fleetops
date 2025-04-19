@@ -1,8 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import eventsRoute from './routes/eventsRoute';
 
 const app = express();
+
 const port = 3000;
 
 app.use(bodyParser.json());
