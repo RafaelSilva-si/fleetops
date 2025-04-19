@@ -67,12 +67,73 @@ curl -X POST http://localhost:3000/events \
   }'
 ```
 
+
+# 🚀 Infraestrutura da API Express com Terraform e AWS
+
+Esse projeto provisiona a infraestrutura necessária para rodar uma API Node.js (Express) no **ECS Fargate** com imagem Docker hospedada no **ECR**, rede em **VPC pública**, e segurança configurada via **Security Group**.
+
+---
+
+## ✅ Pré-requisitos
+
+Antes de começar, certifique-se de ter o seguinte instalado/configurado:
+
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+- [Docker](https://www.docker.com/products/docker-desktop/)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
+- Credenciais da AWS configuradas via:
+
+```bash
+aws configure
+```
+
+## 📦 1. Build e envio da imagem Docker para o ECR
+
+A API precisa estar disponível em uma imagem Docker no Amazon ECR.
+
+Passos:
+
+```bash
+# Build da imagem local
+docker build -t express-backend .
+
+# Tag da imagem (substitua <ACCOUNT_ID> pelo seu ID da AWS)
+docker tag express-backend:latest <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/express-backend:latest
+
+# Login no ECR
+aws ecr get-login-password --region us-east-1 \
+  | docker login --username AWS --password-stdin <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
+
+# Push da imagem para o repositório do ECR
+docker push <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/express-backend:latest
+```
+
+## 📁 2. Executando o Terraform
+
+Com a imagem no ECR, vamos aplicar a infraestrutura com Terraform.
+
+Passos:
+
+```bash
+# Acesse o diretório de infraestrutura
+cd infra/terraform
+
+# Inicialize o Terraform
+terraform init
+
+# Importar o repositório ECR já existente (evita recriação)
+terraform import aws_ecr_repository.backend express-backend
+
+# Aplique a infraestrutura
+terraform apply
+```
+
 ## 📁 Estrutura do Projeto
 
 ```bash
 fleetops/
 ├── backend/              # API REST Express
-├── lambdas/              # Funções AWS Lambda
+├── lambda/              # Funções AWS Lambda
 ├── infra/                # CloudFormation templates
 ├── scripts/              # Scripts Shell de automação
 ├── .github/workflows/    # CI/CD com GitHub Actions

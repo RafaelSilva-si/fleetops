@@ -1,6 +1,6 @@
 # Define o caminho para o diretório do código da Lambda
 variable "lambda_source_path" {
-  default = "../lambda" # Caminho para o diretório do código da Lambda
+  default = "../../lambda" # Caminho para o diretório do código da Lambda
 }
 
 # Usando o recurso archive_file para empacotar o código da Lambda
