@@ -15,7 +15,7 @@ graph TD
     A[Usuário/API Client] --> B[API REST - Express ECS]
     B --> C[SQS - Fila de Eventos]
     C --> D[AWS Lambda - Processa Eventos]
-    D --> E[DynamoDB/RDS]
+    D --> E[DynamoDB]
     D --> F[Datadog - Logs e Métricas]
 ```
 
