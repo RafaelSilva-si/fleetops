@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "us-east-1"
-}
-
 # Define o caminho para o diretório do código da Lambda
 variable "lambda_source_path" {
   default = "../lambda" # Caminho para o diretório do código da Lambda
