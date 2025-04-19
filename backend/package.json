@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node dist/app.js",
     "dev": "ts-node-dev --respawn --transpileOnly src/app.ts",
-    "lint": "eslint 'src/**/*.{ts,js}'",  
-    "lint:fix": "eslint 'src/**/*.{ts,js}' --fix",  
+    "lint": "eslint 'src/**/*.{ts,js}'",
+    "lint:fix": "eslint 'src/**/*.{ts,js}' --fix",
     "format": "prettier --write 'src/**/*.{ts,js}'",
     "build": "tsc"
   },
@@ -15,11 +15,15 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.787.0",
+    "@aws-sdk/credential-providers": "^3.787.0",
     "body-parser": "^2.2.0",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.5",
+    "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.1",
     "@types/node": "^22.14.1",
     "@typescript-eslint/eslint-plugin": "^8.30.1",
