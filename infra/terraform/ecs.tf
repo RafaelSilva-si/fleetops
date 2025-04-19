@@ -40,4 +40,12 @@ resource "aws_ecs_service" "app" {
     security_groups = [aws_security_group.ecs_sg.id]
     assign_public_ip = true
   }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.app_tg.arn
+    container_name   = "express-backend"
+    container_port   = 3000
+  }
+
+  depends_on = [aws_lb_listener.app_listener]
 }
