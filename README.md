@@ -25,10 +25,8 @@ graph TD
 - Docker + ECS (Fargate) – Containerização do backend
 - AWS SQS – Fila de mensagens entre serviços
 - AWS Lambda – Consumo e processamento assíncrono dos eventos
-- CloudFormation – Provisionamento da infraestrutura
+- Terraform – Provisionamento da infraestrutura
 - GitHub Actions – CI/CD
-- Datadog – Observabilidade (logs, métricas, rastreamento)
-- Shell Script – Automação de testes e envio de eventos
 
 ## ⚙️ Funcionalidades
 
@@ -68,13 +66,12 @@ curl -X POST http://localhost:3000/events \
 ```
 
 
-# 🚀 Infraestrutura da API Express com Terraform e AWS
+## 🚀 Infraestrutura da API Express com Terraform e AWS
 
 Esse projeto provisiona a infraestrutura necessária para rodar uma API Node.js (Express) no **ECS Fargate** com imagem Docker hospedada no **ECR**, rede em **VPC pública**, e segurança configurada via **Security Group**.
 
----
 
-## ✅ Pré-requisitos
+### ✅ Pré-requisitos
 
 Antes de começar, certifique-se de ter o seguinte instalado/configurado:
 
@@ -126,6 +123,35 @@ terraform import aws_ecr_repository.backend express-backend
 
 # Aplique a infraestrutura
 terraform apply
+```
+
+## 🌐 Acessando a API via Load Balancer (ALB)
+
+Após a execução do terraform apply, sua aplicação estará disponível publicamente através do Load Balancer criado.
+
+### 🔎 Como descobrir o DNS do Load Balancer
+
+- Acesse o AWS Console.
+- Vá até o serviço EC2.
+- No menu lateral, clique em Load Balancers.
+- Encontre o Load Balancer com o nome express-alb (ou o nome definido no seu alb.tf).
+- Copie o valor do DNS Name (algo como express-alb-123456789.us-east-1.elb.amazonaws.com).
+
+🚀 Testando a API
+Com o DNS copiado, você pode testar sua API no navegador ou no terminal:
+
+```bash
+curl -X POST <DNS_ALB>/events \
+  -H "Content-Type: application/json" \
+  -d '{
+    "vehicleId": "XYZ1234",
+    "type": "check-in",
+    "timestamp": "2025-04-18T12:00:00Z",
+    "details": {
+      "location": "Belo Horizonte",
+      "fuelLevel": 80
+    }
+  }'
 ```
 
 ## 📁 Estrutura do Projeto
