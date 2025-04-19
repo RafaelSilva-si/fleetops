@@ -7,16 +7,15 @@ export const handler = async (event) => {
 
   for (const record of event.Records) {
     const message = JSON.parse(record.body);
-    const messageBody = JSON.parse(message.MessageBody);
 
     const command = new PutItemCommand({
       TableName: "EventsTable",
       Item: {
-        vehicleId: { S: messageBody.vehicleId },
-        type: { S: messageBody.type },
-        timestamp: { S: messageBody.timestamp },
-        location: { S: messageBody.details.location },
-        fuelLevel: { N: String(messageBody.details.fuelLevel) },
+        vehicleId: { S: message.vehicleId },
+        type: { S: message.type },
+        timestamp: { S: message.timestamp },
+        location: { S: message.details.location },
+        fuelLevel: { N: String(message.details.fuelLevel) },
       },
     });
 
