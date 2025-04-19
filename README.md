@@ -26,7 +26,6 @@ graph TD
 - AWS SQS – Fila de mensagens entre serviços
 - AWS Lambda – Consumo e processamento assíncrono dos eventos
 - Terraform – Provisionamento da infraestrutura
-- GitHub Actions – CI/CD
 
 ## ⚙️ Funcionalidades
 
@@ -161,8 +160,6 @@ fleetops/
 ├── backend/              # API REST Express
 ├── lambda/              # Funções AWS Lambda
 ├── infra/                # CloudFormation templates
-├── scripts/              # Scripts Shell de automação
-├── .github/workflows/    # CI/CD com GitHub Actions
 └── README.md
 ```
 
