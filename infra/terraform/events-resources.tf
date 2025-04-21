@@ -41,10 +41,10 @@ resource "aws_iam_role" "lambda_execution_role" {
 }
 
 resource "aws_dynamodb_table" "events_table" {
-  name           = "EventsTable"
-  billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "vehicleId"
-  range_key      = "timestamp"
+  name         = "EventsTable"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "vehicleId"
+  range_key    = "timestamp"
 
   attribute {
     name = "vehicleId"
