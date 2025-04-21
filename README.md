@@ -9,6 +9,9 @@ Criar uma aplicação robusta que recebe eventos de frota via API REST, envia pa
 ---
 
 ## 🧱 Arquitetura
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ab9fdf3f-c54a-41ab-bada-d8871e4af393" alt="FleetOps Arquitetura" width="600"/>
+</p>
 
 ```mermaid
 graph TD
