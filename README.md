@@ -36,8 +36,7 @@ graph TD
 - [X] Validar e publicar os eventos na SQS
 - [X] Processar eventos com Lambda
 - [X] Persistir dados em banco DynamoDB
-- [X] Expor métricas e logs no Datadog
-- [X] Provisionar tudo com CloudFormation
+- [X] Provisionar tudo com Terraform
 
 ## 🚀 Como rodar localmente
 
@@ -162,7 +161,7 @@ curl -X POST <DNS_ALB>/events \
 fleetops/
 ├── backend/              # API REST Express
 ├── lambda/              # Funções AWS Lambda
-├── infra/                # CloudFormation templates
+├── infra/                # Terraform templates
 └── README.md
 ```
 
