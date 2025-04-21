@@ -4,7 +4,7 @@
 
 ## 🎯 Objetivo
 
-Criar uma aplicação robusta que recebe eventos de frota via API REST, envia para uma fila (SQS), processa esses eventos via AWS Lambda e os persiste em uma base de dados. Tudo provisionado com infraestrutura como código (IaC) e monitorado via Datadog.
+Criar uma aplicação robusta que recebe eventos de frota via API REST, envia para uma fila (SQS), processa esses eventos via AWS Lambda e os persiste em uma base de dados. Tudo provisionado com infraestrutura como código (IaC).
 
 ---
 
